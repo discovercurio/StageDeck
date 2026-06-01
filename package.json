@@ -1,0 +1,13 @@
+{
+  "name": "stagedeck-setlist-builder",
+  "version": "1.0.0",
+  "private": true,
+  "description": "StageDeck DJ setlist builder packaged for Vercel static hosting.",
+  "scripts": {
+    "dev": "vercel dev",
+    "start": "vercel dev"
+  },
+  "devDependencies": {
+    "vercel": "latest"
+  }
+}
