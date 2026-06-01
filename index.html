@@ -545,7 +545,7 @@
                 updateKeyButtons();
                 applyFilters();
                 showNotification(`Loaded ${allSongs.length} tracks`, 'success');
-                lookupSpotifyPreviews({ force: true });
+                // lookupSpotifyPreviews({ force: true }); // disabled: Spotify Web API requires auth; local HAR cache is used instead
             };
             reader.readAsText(file);
         });
@@ -763,7 +763,7 @@
 
         function spotifyActionHTML(trackId, mini = false) {
             const disabled = !trackId ? 'disabled' : '';
-            return `<button class="track-action-btn spotify-logo-btn ${mini ? 'mini' : ''}" ${disabled} title="Open in Spotify" onclick="openSpotify(${jsString(trackId)}, event)"><img src="${SPOTIFY_ICON_SRC}" alt="Spotify"></button>`;
+            return `<button class="track-action-btn spotify-logo-btn ${mini ? 'mini' : ''}" ${disabled} title="Open in Spotify" onclick='openSpotify(${jsString(trackId)}, event)'><img src="${SPOTIFY_ICON_SRC}" alt="Spotify"></button>`;
         }
 
         function sampleActionHTML(previewUrl, mini = false) {
@@ -771,7 +771,7 @@
             const title = previewUrl
                 ? 'Play 30 second sample'
                 : (previewLookupInFlight ? 'Looking up Spotify preview URL...' : 'No Spotify sample found yet');
-            return `<button class="track-action-btn sample-btn ${mini ? 'mini' : ''}" ${disabled} title="${escAttr(title)}" onclick="togglePreview(${jsString(previewUrl)}, this, event)"></button>`;
+            return `<button class="track-action-btn sample-btn ${mini ? 'mini' : ''}" ${disabled} title="${escAttr(title)}" onclick='togglePreview(${jsString(previewUrl)}, this, event)'></button>`;
         }
 
         function togglePreview(url, btn, event) {
@@ -873,7 +873,7 @@
                         <div class="song-info">
                             <div class="album-art">${albumImage ? `<img src="${albumImage}">` : '♪'}</div>
                             <div style="min-width:0;flex:1;">
-                                <a class="song-title-link" href="#" onclick="openSpotifyWeb(${jsString(trackId)}); return false;"><div class="song-title" title="${escAttr(songName)}">${esc(songName)}</div></a>
+                                <a class="song-title-link" href="#" onclick='openSpotifyWeb(${jsString(trackId)}); return false;'><div class="song-title" title="${escAttr(songName)}">${esc(songName)}</div></a>
                                 <div class="song-artist" title="${escAttr(artistName)}">${esc(artistName)}</div>
                             </div>
                         </div>
@@ -882,7 +882,7 @@
                     <td><span class="bpm-badge">${esc(bpm)}</span></td>
                     <td style="font-size:11px;color:var(--text-muted);white-space:nowrap;">
                         ${formatDuration(duration)}
-                        <span class="add-choice"><button class="add-mini-btn" title="Add before first track" onclick="addSongByTrackId(${jsString(trackId)}, 'start')">↑</button><button class="add-mini-btn" title="Add after last track" onclick="addSongByTrackId(${jsString(trackId)}, 'end')">↓</button></span>
+                        <span class="add-choice"><button class="add-mini-btn" title="Add before first track" onclick='addSongByTrackId(${jsString(trackId)}, "start")'>↑</button><button class="add-mini-btn" title="Add after last track" onclick='addSongByTrackId(${jsString(trackId)}, "end")'>↓</button></span>
                     </td>
                 </tr>`;
             }).join('');
@@ -1038,7 +1038,7 @@
                 ${buildTurntableArt(albumImage)}
                 <div class="now-playing-info">
                     <div class="now-playing-eyebrow">${label}</div>
-                    <a class="song-title-link" href="#" onclick="openSpotifyWeb(${jsString(trackId)}); return false;" title="Open in Spotify Web">
+                    <a class="song-title-link" href="#" onclick='openSpotifyWeb(${jsString(trackId)}); return false;' title="Open in Spotify Web">
                         <div class="now-playing-title" title="${songName}">${songName}</div>
                     </a>
                     <div class="now-playing-artist">${esc(artistName)}</div>
@@ -1076,7 +1076,7 @@
                             <div class="song-info">
                                 <div class="album-art">${albumImage ? `<img src="${albumImage}">` : '♪'}</div>
                                 <div style="min-width:0;flex:1;">
-                                    <a class="song-title-link" href="#" onclick="openSpotifyWeb(${jsString(trackId)}); return false;">
+                                    <a class="song-title-link" href="#" onclick='openSpotifyWeb(${jsString(trackId)}); return false;'>
                                         <div class="song-title" title="${escAttr(songName)}">${esc(songName)}</div>
                                     </a>
                                     <div class="song-artist" title="${escAttr(artistName)}">${esc(artistName)}</div>
@@ -1184,12 +1184,12 @@
                     ${sampleActionHTML(previewUrl, true)}
                     <div class="album-art" style="width:27px;height:27px;font-size:12px;">${albumImage ? `<img src="${albumImage}">` : '♪'}</div>
                     <div style="flex:1;min-width:0;">
-                        <a class="song-title-link" href="#" onclick="openSpotifyWeb(${jsString(trackId)}); return false;"><div style="font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(songName)}</div></a>
+                        <a class="song-title-link" href="#" onclick='openSpotifyWeb(${jsString(trackId)}); return false;'><div style="font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(songName)}</div></a>
                         <div style="font-size:11px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${artistName}</div>
                     </div>
                     <span class="key-badge" style="font-size:10px;padding:2px 6px;">${camelot}</span>
                     <span class="bpm-badge" style="font-size:10px;padding:2px 6px;">${bpm}</span>
-                    <span class="add-choice"><button class="add-mini-btn" title="Add before first track" onclick="addSongByTrackId(${jsString(trackId)}, 'start')">↑</button><button class="add-mini-btn" title="Add after last track" onclick="addSongByTrackId(${jsString(trackId)}, 'end')">↓</button></span>
+                    <span class="add-choice"><button class="add-mini-btn" title="Add before first track" onclick='addSongByTrackId(${jsString(trackId)}, "start")'>↑</button><button class="add-mini-btn" title="Add after last track" onclick='addSongByTrackId(${jsString(trackId)}, "end")'>↓</button></span>
                 </div>`;
             }).join('');
 
